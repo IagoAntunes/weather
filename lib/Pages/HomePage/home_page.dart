@@ -341,16 +341,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
-          return Center(
-              child: Column(
-            children: [
-              Text(
-                'Oi',
-                style: TextStyle(color: Colors.white),
-              ),
-              CircularProgressIndicator(),
-            ],
-          ));
+          return Center(child: CircularProgressIndicator());
         }
       },
     );
