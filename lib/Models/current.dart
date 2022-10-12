@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:weather/Colors/colors.dart';
+
 class Current {
   int lastupdatedepoch;
   String lastupdated;
@@ -22,6 +26,7 @@ class Current {
   double uv;
   double gustmph;
   double gustkph;
+  List<Color>? colors;
 
   Current({
     required this.lastupdatedepoch,
@@ -51,6 +56,7 @@ class Current {
 
   factory Current.fromMap(Map<String, dynamic> map) {
     Current current;
+
     current = Current(
       lastupdatedepoch: map['last_updated_epoch'],
       cloud: map['cloud'],
@@ -76,6 +82,11 @@ class Current {
       text: map['condition']['text'],
       img: map['condition']['icon'],
     );
+    if (current.text == 'a') {
+      current.colors = ColorsMine.listSunny;
+    } else {
+      current.colors = ColorsMine.rain;
+    }
     return current;
   }
 }

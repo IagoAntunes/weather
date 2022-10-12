@@ -10,7 +10,7 @@ class General {
     String key = '7af1d97bfbd841b5bbc140044221110';
     Weather weather;
     final response = await http.get(
-      Uri.parse('$url/forecast.json?key=$key&q=-19.912998,-43.940933'),
+      Uri.parse('$url/forecast.json?key=$key&q=spain&days=7'),
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);

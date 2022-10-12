@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:weather/Colors/colors.dart';
 import 'package:weather/Models/weather.dart';
 import 'package:weather/Services/general.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
-  Weather? previsao;
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Weather? weather;
+  List<Color> listColor = [];
   Future<bool> getApi() async {
-    if (previsao == null) {
-      previsao = await General.getWeather();
+    if (weather == null) {
+      weather = await General.getWeather();
       return true;
     }
     return false;
@@ -16,26 +23,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment(0.8, 1),
-        colors: <Color>[
-          Color(0xff08244F),
-          Color(0xff134CB5),
-          Color(0xff0B42AB),
-        ], // Gradient from https://learnui.design/tools/gradient-generator.html
-        tileMode: TileMode.mirror,
-      )),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: FutureBuilder(
-            future: getApi(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Padding(
+    return FutureBuilder(
+      future: getApi(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: const Alignment(0.8, 1),
+                colors: weather!.color!.backgroundColor!,
+                tileMode: TileMode.mirror,
+              ),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
@@ -54,7 +58,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Fortaleza',
+                                  '${weather!.location.name}',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ],
@@ -74,14 +78,18 @@ class HomePage extends StatelessWidget {
                           children: [
                             SizedBox(
                                 height: 200,
-                                child: Image.asset('assets/suncloud.png')),
+                                child: Image.network(
+                                  'http:${weather!.current.img}',
+                                )),
                             Container(
                               child: Column(
                                 children: [
                                   Text(
-                                    '28º',
-                                    style: TextStyle(
-                                        fontSize: 50, color: Colors.white),
+                                    '${weather!.current.tempc.round().toString()}º',
+                                    style: const TextStyle(
+                                        fontSize: 50,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     'Precipitations',
@@ -92,15 +100,17 @@ class HomePage extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Max.: 30º',
-                                        style: TextStyle(color: Colors.white),
+                                        'Max.: ${weather!.forecast.forecastday[0].day.maxtempc.round().toString()}',
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                       SizedBox(
                                         width: 10,
                                       ),
                                       Text(
-                                        'Min.: 25',
-                                        style: TextStyle(color: Colors.white),
+                                        'Min.: ${weather!.forecast.forecastday[0].day.mintempc.round().toString()}',
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       )
                                     ],
                                   ),
@@ -114,23 +124,26 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Container(
-                          decoration: const BoxDecoration(
-                            color: Color(0xff0d3989),
-                            borderRadius: BorderRadius.all(
+                          decoration: BoxDecoration(
+                            color: weather!.color!.container,
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
                                     Image.asset('assets/rain.png'),
-                                    Text(
-                                      '6%',
-                                      style: TextStyle(color: Colors.white),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Text(
+                                        '${weather!.forecast.forecastday[0].day.dailychanceofrain}%',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -138,8 +151,9 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     Image.asset('assets/humidity.png'),
                                     Text(
-                                      '90%',
-                                      style: TextStyle(color: Colors.white),
+                                      '${weather!.forecast.forecastday[0].day.avghumidity.round().toString()}%',
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -147,8 +161,9 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     Image.asset('assets/wind.png'),
                                     Text(
-                                      '19 Km/h',
-                                      style: TextStyle(color: Colors.white),
+                                      '${weather!.forecast.forecastday[0].day.maxwindkph.round()} km/h',
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     )
                                   ],
                                 )
@@ -160,14 +175,14 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Container(
-                          decoration: const BoxDecoration(
-                            color: Color(0xff0d3989),
-                            borderRadius: BorderRadius.all(
+                          decoration: BoxDecoration(
+                            color: weather!.color!.container,
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: Column(
                               children: [
                                 Padding(
@@ -175,7 +190,7 @@ class HomePage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
+                                    children: const [
                                       Text(
                                         'Today',
                                         style: TextStyle(color: Colors.white),
@@ -193,7 +208,8 @@ class HomePage extends StatelessWidget {
                                   height: 100,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: 4,
+                                    itemCount: weather!
+                                        .forecast.forecastday[0].hour.length,
                                     itemBuilder: ((context, index) {
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -202,21 +218,14 @@ class HomePage extends StatelessWidget {
                                           child: Column(
                                             children: [
                                               Text(
-                                                '29º C',
+                                                '${weather!.forecast.forecastday[0].hour[index].tempc.round()}ºC',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10),
-                                                child: Icon(
-                                                  Icons.sunny,
-                                                  color: Colors.orange,
-                                                ),
-                                              ),
+                                              Image.network(
+                                                  'http:${weather!.forecast.forecastday[0].hour[index].icon}'),
                                               Text(
-                                                '15:00',
+                                                '${weather!.forecast.forecastday[0].hour[index].time}',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               )
@@ -232,16 +241,118 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: weather!.color!.container,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text(
+                                      'Next Forecast',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'RobotoMono'),
+                                    ),
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 130,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        weather!.forecast.forecastday.length,
+                                    itemBuilder: ((context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              weather!.forecast
+                                                  .forecastday[index].date,
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            Image.network(
+                                              'http:${weather!.forecast.forecastday[index].day.icon}',
+                                              scale: 2,
+                                            ),
+                                            Container(
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    weather!
+                                                        .forecast
+                                                        .forecastday[index]
+                                                        .day
+                                                        .mintempc
+                                                        .round()
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Text(
+                                                    weather!
+                                                        .forecast
+                                                        .forecastday[index]
+                                                        .day
+                                                        .maxtempc
+                                                        .round()
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: Colors.grey),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ),
-      ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Center(
+              child: Column(
+            children: [
+              Text(
+                'Oi',
+                style: TextStyle(color: Colors.white),
+              ),
+              CircularProgressIndicator(),
+            ],
+          ));
+        }
+      },
     );
   }
 }
