@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weather/Models/forecastday/hour.dart';
-import 'package:weather/Models/weather.dart';
+import 'package:place/Models/forecastday/hour.dart';
+
+import '../../Models/place.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key, required this.weather});
-  Weather? weather;
+  HomePage({super.key, required this.place});
+  Place? place;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     Size size = MediaQuery.of(context).size;
     int hour = DateTime.now().hour;
     List<Hour> listHours = [];
-    for (var element in widget.weather!.forecast.forecastday[0].hour) {
+    for (var element in widget.place!.forecast.forecastday[0].hour) {
       if (int.parse(element.time.substring(0, 2)) >= hour) {
         listHours.add(element);
       }
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: const Alignment(0.8, 1),
-          colors: widget.weather!.color!.backgroundColor!,
+          colors: widget.place!.color!.backgroundColor!,
           tileMode: TileMode.mirror,
         ),
       ),
@@ -55,15 +56,26 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              widget.weather!.location.name,
+                              widget.place!.location.name,
                               style: const TextStyle(color: Colors.white),
                             ),
                           ],
                         ),
-                        const Icon(
-                          Icons.notifications_outlined,
-                          color: Colors.white,
-                        )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                                onPressed: (() => Navigator.pop(context)),
+                                icon: const Icon(
+                                  Icons.home,
+                                  color: Colors.white,
+                                )),
+                            const Icon(
+                              Icons.notifications_outlined,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ],
                     ),
                     //Image
@@ -75,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             RichText(
                               text: TextSpan(
-                                text: widget.weather!.current.tempc
+                                text: widget.place!.current.tempc
                                     .round()
                                     .toString(),
                                 style: const TextStyle(
@@ -89,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              widget.weather!.current.text,
+                              widget.place!.current.text,
                               style: const TextStyle(
                                   fontSize: 25, color: Colors.white),
                             ),
@@ -106,8 +118,8 @@ class _HomePageState extends State<HomePage> {
                                       size: 20,
                                     ),
                                     Text(
-                                      widget.weather!.forecast.forecastday[0]
-                                          .day.maxtempc
+                                      widget.place!.forecast.forecastday[0].day
+                                          .maxtempc
                                           .round()
                                           .toString(),
                                       style:
@@ -126,8 +138,8 @@ class _HomePageState extends State<HomePage> {
                                       size: 20,
                                     ),
                                     Text(
-                                      widget.weather!.forecast.forecastday[0]
-                                          .day.mintempc
+                                      widget.place!.forecast.forecastday[0].day
+                                          .mintempc
                                           .round()
                                           .toString(),
                                       style:
@@ -146,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(top: 20),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: widget.weather!.color!.container,
+                          color: widget.place!.color!.container,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10),
                           ),
@@ -162,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Text(
-                                      '${widget.weather!.forecast.forecastday[0].day.dailychanceofrain}%',
+                                      '${widget.place!.forecast.forecastday[0].day.dailychanceofrain}%',
                                       style:
                                           const TextStyle(color: Colors.white),
                                     ),
@@ -173,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Image.asset('assets/humidity.png'),
                                   Text(
-                                    '${widget.weather!.forecast.forecastday[0].day.avghumidity.round().toString()}%',
+                                    '${widget.place!.forecast.forecastday[0].day.avghumidity.round().toString()}%',
                                     style: const TextStyle(color: Colors.white),
                                   )
                                 ],
@@ -182,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Image.asset('assets/wind.png'),
                                   Text(
-                                    '${widget.weather!.forecast.forecastday[0].day.maxwindkph.round()} km/h',
+                                    '${widget.place!.forecast.forecastday[0].day.maxwindkph.round()} km/h',
                                     style: const TextStyle(color: Colors.white),
                                   )
                                 ],
@@ -197,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(top: 20),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: widget.weather!.color!.container,
+                          color: widget.place!.color!.container,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10),
                           ),
@@ -276,7 +288,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: widget.weather!.color!.container,
+                          color: widget.place!.color!.container,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10),
                           ),
@@ -306,8 +318,8 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(
                                 height: size.height * 0.3,
                                 child: ListView.builder(
-                                  itemCount: widget
-                                      .weather!.forecast.forecastday.length,
+                                  itemCount:
+                                      widget.place!.forecast.forecastday.length,
                                   itemBuilder: ((context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -316,13 +328,13 @@ class _HomePageState extends State<HomePage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            widget.weather!.forecast
+                                            widget.place!.forecast
                                                 .forecastday[index].date,
                                             style: const TextStyle(
                                                 color: Colors.white),
                                           ),
                                           Image.network(
-                                            'http:${widget.weather!.forecast.forecastday[index].day.icon}',
+                                            'http:${widget.place!.forecast.forecastday[index].day.icon}',
                                             scale: 2,
                                           ),
                                           Row(
@@ -330,18 +342,18 @@ class _HomePageState extends State<HomePage> {
                                               RichText(
                                                 text: TextSpan(
                                                   text: widget
-                                                      .weather!
+                                                      .place!
                                                       .forecast
                                                       .forecastday[index]
                                                       .day
-                                                      .mintempc
+                                                      .maxtempc
                                                       .round()
                                                       .toString(),
                                                   style: const TextStyle(
                                                       color: Colors.white),
                                                   children: const <TextSpan>[
                                                     TextSpan(
-                                                      text: 'ºc',
+                                                      text: 'ºC',
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 12,
@@ -354,11 +366,11 @@ class _HomePageState extends State<HomePage> {
                                               RichText(
                                                 text: TextSpan(
                                                   text: widget
-                                                      .weather!
+                                                      .place!
                                                       .forecast
                                                       .forecastday[index]
                                                       .day
-                                                      .maxtempc
+                                                      .mintempc
                                                       .round()
                                                       .toString(),
                                                   style: const TextStyle(

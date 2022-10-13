@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/Models/weather.dart';
-import 'package:weather/Pages/LoginPage/login_page.dart';
+import 'package:place/Models/place.dart';
+import 'package:place/Pages/LoginPage/login_page.dart';
 
 import '../../Services/general.dart';
 
@@ -13,7 +13,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  Weather? weather;
+  Place? place;
   @override
   void initState() {
     super.initState();
@@ -21,11 +21,11 @@ class _SplashState extends State<Splash> {
   }
 
   void getApi() async {
-    weather ??= await General.getWeather();
+    place ??= await General.getplace('spain');
     Navigator.of(context).push(
       CupertinoPageRoute(
         builder: (BuildContext context) => LoginPage(
-          weather: weather!,
+          place: place!,
         ),
       ),
     );
@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Icon(Icons.cloud),
-          Text('Weather'),
+          Text('place'),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:weather/Colors/colors.dart';
+import 'package:place/Colors/colors.dart';
 
 class Current {
   int lastupdatedepoch;

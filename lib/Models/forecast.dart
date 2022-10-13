@@ -1,4 +1,4 @@
-import 'package:weather/Models/forecastday/forecastday.dart';
+import 'package:place/Models/forecastday/forecastday.dart';
 
 class Forecast {
   List<Forecastday> forecastday;

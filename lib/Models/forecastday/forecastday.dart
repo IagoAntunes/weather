@@ -1,5 +1,5 @@
-import 'package:weather/Models/forecastday/day.dart';
-import 'package:weather/Models/forecastday/hour.dart';
+import 'package:place/Models/forecastday/day.dart';
+import 'package:place/Models/forecastday/hour.dart';
 
 class Forecastday {
   String date;

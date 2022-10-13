@@ -1,4 +1,4 @@
-name: weather
+name: place
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -37,6 +37,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.5
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

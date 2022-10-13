@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:weather/Colors/colors.dart';
-import 'package:weather/Pages/HomePage/home_page.dart';
+import 'package:place/Colors/colors.dart';
+import 'package:place/Models/weather_model.dart';
+import 'package:place/Pages/HomePage/home_page.dart';
 
-import '../../Models/weather.dart';
+import '../../Models/place.dart';
+import '../ListWeatherForecasts/list_weather_page.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key, required this.weather});
-  Weather weather;
+  LoginPage({super.key, required this.place});
+  Place place;
   @override
   Widget build(BuildContext context) {
+    Weather weathers = Weather(listPlace: [place]);
+
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: const Alignment(0.8, 1),
-          colors: weather.color!.backgroundColor!,
+          colors: place.color!.backgroundColor!,
           tileMode: TileMode.mirror,
         ),
       ),
@@ -85,7 +89,7 @@ class LoginPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              'My weather app',
+                              'My place app',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 32,
@@ -96,7 +100,7 @@ class LoginPage extends StatelessWidget {
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: Text(
-                                  'Check Live weather updates all over the world with just one tap',
+                                  'Check Live place updates all over the world with just one tap',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -111,7 +115,7 @@ class LoginPage extends StatelessWidget {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                weather.color!.container,
+                                place.color!.container,
                               ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
@@ -123,8 +127,8 @@ class LoginPage extends StatelessWidget {
                             onPressed: (() => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: ((context) => HomePage(
-                                          weather: weather,
+                                    builder: ((context) => ListplacePage(
+                                          weathers: weathers,
                                         )),
                                   ),
                                 )),
