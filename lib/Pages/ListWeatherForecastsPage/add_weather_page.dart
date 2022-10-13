@@ -18,8 +18,10 @@ class _AddWeatherPageState extends State<AddWeatherPage> {
   bool validate = false;
 
   void teste(BuildContext context, String text) async {
-    Place place = await General.getplace(text);
-    widget.weathers.listPlace!.add(place);
+    Place? place = await General.getplace(text);
+    if (place != null) {
+      widget.weathers.listPlace!.add(place);
+    }
 
     Navigator.pop(context, widget.weathers);
   }
@@ -47,9 +49,9 @@ class _AddWeatherPageState extends State<AddWeatherPage> {
             TextField(
               controller: controller,
               decoration: InputDecoration(
-                hintText: 'Insert city name',
-                errorText: validate ? 'Field is Empty' : '',
-              ),
+                  hintText: 'Insert city name',
+                  errorText: validate ? 'Field is Empty' : null,
+                  prefixIcon: const Icon(Icons.location_city)),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -71,7 +73,10 @@ class _AddWeatherPageState extends State<AddWeatherPage> {
                         validate = true;
                       });
                     } else {
-                      teste(context, controller.text);
+                      setState(() {
+                        validate = false;
+                      });
+                      teste(context, controller.text.toLowerCase().trim());
                     }
                   }),
                   child: const Text(

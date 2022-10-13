@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:place/Colors/colors.dart';
 import 'package:place/Models/weather_model.dart';
-import 'package:place/Pages/HomePage/home_page.dart';
-
 import '../../Models/place.dart';
-import '../ListWeatherForecasts/list_weather_page.dart';
+import '../ListWeatherForecastsPage/list_weather_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key, required this.place});
@@ -96,12 +93,13 @@ class LoginPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                             ),
                             SizedBox(
-                              width: size.width * 0.7,
+                              width: size.width * 0.75,
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: Text(
                                   'Check Live place updates all over the world with just one tap',
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
                                 ),
                               ),
                             )

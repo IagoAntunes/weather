@@ -21,7 +21,7 @@ class _SplashState extends State<Splash> {
   }
 
   void getApi() async {
-    place ??= await General.getplace('spain');
+    place ??= await General.getCurrentPlace();
     Navigator.of(context).push(
       CupertinoPageRoute(
         builder: (BuildContext context) => LoginPage(
@@ -33,15 +33,27 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.cloud),
-          Text('place'),
-        ],
+    return Material(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Icons.cloud,
+              color: Colors.blue,
+              size: 70,
+            ),
+            Text(
+              'Weather',
+              style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 70,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
