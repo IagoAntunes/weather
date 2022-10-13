@@ -75,7 +75,7 @@ class Hour {
     Hour hour;
     hour = Hour(
       timeepoch: map['time_epoch'],
-      time: map['time'].toString().substring(10),
+      time: map['time'].toString().substring(11),
       tempc: map['temp_c'],
       tempf: map['temp_f'],
       isday: map['is_day'],

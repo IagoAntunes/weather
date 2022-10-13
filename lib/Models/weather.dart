@@ -11,8 +11,11 @@ class Weather {
   Current current;
   Forecast forecast;
   ColorCustom? color;
-  Weather(
-      {required this.location, required this.current, required this.forecast});
+  Weather({
+    required this.location,
+    required this.current,
+    required this.forecast,
+  });
 
   factory Weather.fromMap(Map<String, dynamic> map) {
     Weather weather;
@@ -25,22 +28,22 @@ class Weather {
       forecast: forecast,
     );
 
-    // if (current.text == 'Sunny') {
-    //   weather.color = ColorCustom(
-    //     backgroundColor: ColorsMine.listSunny,
-    //     container: Color(0xff288fc4),
-    //   );
-    // } else {
-    //   weather.color = ColorCustom(
-    //     backgroundColor: ColorsMine.rain,
-    //     container: Color(0xff0c3989),
-    //   );
-    // }
+    if (current.text == 'Sunny') {
+      weather.color = ColorCustom(
+        backgroundColor: ColorsMine.listSunny,
+        container: Color(0xff288fc4),
+      );
+    } else {
+      weather.color = ColorCustom(
+        backgroundColor: ColorsMine.rain,
+        container: Color(0xff0c3989),
+      );
+    }
 
-    weather.color = ColorCustom(
-      backgroundColor: ColorsMine.listSunny,
-      container: Color(0xff288fc4),
-    );
+    // weather.color = ColorCustom(
+    //   backgroundColor: ColorsMine.listSunny,
+    //   container: const Color(0xff288fc4),
+    // );
     return weather;
   }
 }

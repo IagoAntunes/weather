@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/Pages/HomePage/home_page.dart';
-import 'package:weather/Pages/LoginScreen/login_page.dart';
+import 'package:weather/Pages/SplashScreen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'RobotoMono',
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: Splash(),
     );
   }
 }
