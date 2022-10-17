@@ -39,7 +39,9 @@
 
 O layout da aplicação está disponível no Figma:
 
-<a href="https://www.figma.com/file/THLxZSlOoUYMZrjFg0Kl1M/Pok%C3%A9dex?node-id=218%3A4647">
+https://www.figma.com/community/file/1158928016905524023
+
+<a>
   <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="500">
 </a>
 
