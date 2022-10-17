@@ -22,8 +22,9 @@ class _AddWeatherPageState extends State<AddWeatherPage> {
     if (place != null) {
       widget.weathers.listPlace!.add(place);
     }
-
-    Navigator.pop(context, widget.weathers);
+    if (mounted) {
+      Navigator.pop(context, widget.weathers);
+    }
   }
 
   @override

@@ -42,7 +42,7 @@ class Place {
       if (listTextSun.contains(current.text.toLowerCase())) {
         place.color = ColorCustom(
           backgroundColor: ColorsMine.listSunny,
-          container: Color(0xff288fc4),
+          container: const Color(0xff288fc4),
         );
       } else if (current.text.toLowerCase().contains('rain')) {
         place.color = ColorCustom(

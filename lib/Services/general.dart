@@ -29,18 +29,15 @@ class General {
   static getCurrentPlace() async {
     Location location = Location();
     LocationData locationData;
-
-    // locationData = await location.getLocation();
+    locationData = await location.getLocation();
     String url = 'http://api.weatherapi.com/v1';
     String key = '7af1d97bfbd841b5bbc140044221110';
     Place place;
+
     final response = await http.get(
-      Uri.parse('$url/forecast.json?key=$key&q=spain&days=7'),
+      Uri.parse(
+          '$url/forecast.json?key=$key&q=${locationData.latitude},${locationData.longitude}&days=7'),
     );
-    // final response = await http.get(
-    //   Uri.parse(
-    //       '$url/forecast.json?key=$key&q=${locationData.latitude},${locationData.longitude}&days=7'),
-    // );
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       final map = {

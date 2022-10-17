@@ -22,13 +22,15 @@ class _SplashState extends State<Splash> {
 
   void getApi() async {
     place ??= await General.getCurrentPlace();
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (BuildContext context) => LoginPage(
-          place: place!,
+    if (mounted) {
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (BuildContext context) => LoginPage(
+            place: place!,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override

@@ -37,26 +37,24 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    //Parte de Cima
-                    AppBarOptionsWidget(widget: widget),
-                    //Temperature
-                    TemperatureWidget(widget: widget),
-                    //Details
-                    DetailsPrediction(
-                      widget: widget,
-                    ),
-                    //Hour Predictions
-                    HoursPredictionsWidget(
-                        widget: widget, size: size, listHours: listHours),
-                    //Forecast Next Days
-                    ForecastNextDays(widget: widget, size: size),
-                  ],
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  //Parte de Cima
+                  AppBarOptionsWidget(widget: widget),
+                  //Temperature
+                  TemperatureWidget(widget: widget),
+                  //Details
+                  DetailsPrediction(
+                    widget: widget,
+                  ),
+                  //Hour Predictions
+                  HoursPredictionsWidget(
+                      widget: widget, size: size, listHours: listHours),
+                  //Forecast Next Days
+                  ForecastNextDays(widget: widget, size: size),
+                ],
               ),
             ),
           ),
@@ -244,7 +242,7 @@ class DetailsPrediction extends StatelessWidget {
                     style: const TextStyle(color: Colors.white),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -284,21 +282,21 @@ class HoursPredictionsWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Today',
                       style: TextStyle(color: Colors.white),
                     ),
                     Text(
-                      'Mar 9',
-                      style: TextStyle(
+                      '${widget.place!.current.lastupdated.substring(8, 10)}/${widget.place!.current.lastupdated.substring(5, 7)}',
+                      style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: size.height * 0.18,
+                height: size.height * 0.16,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: listHours.length,
@@ -319,7 +317,11 @@ class HoursPredictionsWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Image.network('http:${listHours[index].icon}'),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child:
+                                Image.network('http:${listHours[index].icon}'),
+                          ),
                           Text(
                             listHours[index].time,
                             style: const TextStyle(color: Colors.white),
@@ -353,6 +355,7 @@ class ForecastNextDays extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
+        height: size.height * 0.3,
         decoration: BoxDecoration(
           color: Colors.transparent.withOpacity(0.20),
           borderRadius: const BorderRadius.all(
@@ -382,7 +385,7 @@ class ForecastNextDays extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: size.height * 0.3,
+                height: size.height * 0.25,
                 child: ListView.builder(
                   itemCount: widget.place!.forecast.forecastday.length,
                   itemBuilder: ((context, index) {
