@@ -42,7 +42,7 @@ O layout da aplicação está disponível no Figma:
 https://www.figma.com/community/file/1158928016905524023
 
 <a>
-  <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="500">
+  <img src="https://github.com/IagoAntunes/weather/blob/master/assets/22-10-17-14-10-12_01.gif" min-width="400px" max-width="400px" width="300px" alt="ImagemComputador">
 </a>
 
 ## 🛠 Tecnologias
