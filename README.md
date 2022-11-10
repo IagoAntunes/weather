@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="500">
+    <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="900">
 </p>
 
 <h4 align="center"> 
